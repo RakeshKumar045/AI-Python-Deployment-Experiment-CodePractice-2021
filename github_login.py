@@ -3,7 +3,7 @@ import json
 import requests
 
 token = "write_access_token"
-user = "github_user"
+user = "github_username"
 password = "github_password"
 repos_url = 'https://api.github.com/user/repos'
 
@@ -18,7 +18,7 @@ repos_url = 'https://api.github.com/user/repos'
 
 # 3rd
 repo = 'some_repo_rakesh'
-description = 'Created with api raka testing '
+description = 'Created with api raka testing'
 
 payload = {'name': repo, 'description': description, 'auto_init': 'true'}
 
