@@ -2,9 +2,10 @@ import json
 
 import requests
 
-token = "write_access_token"
-user = "github_username"
+token = "Github_Access_Token"
+user = "RakeshKumar045"
 password = "github_password"
+
 repos_url = 'https://api.github.com/user/repos'
 
 # 1st
