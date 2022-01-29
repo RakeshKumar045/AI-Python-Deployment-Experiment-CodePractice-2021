@@ -6,7 +6,6 @@ print("Basic A Example", "-" * 80)
 class Sample:
     pass
 
-
 sample1 = Sample
 sample2 = Sample()
 print("sample content of main block : ", dir())
