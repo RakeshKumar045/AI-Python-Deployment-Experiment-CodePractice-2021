@@ -1,0 +1,21 @@
+2. Q: Estimate (just by eyeballing) the proportion of the word types that occurred only once in this corpus. Do you think the proportion of words that occur only once would be higher or lower if we used a larger corpus (e.g., all 57000 sentences in Brown)? Why or why not?
+
+ANS: Approximately 60% of words occur once in the current bown_100.txt. If the corpus is larger than the current corpus; first the words that only occured once will increase untill every word counts in the numpy array have been filled by at least 1.0(meaning every word at least occured once), then the number of words that only occured once will start decreasing. 
+
+
+4. Q: Why did all four probabilities go down in the smoothed model? Now note that the probabilities did not all decrease by the same amount. 
+In particular, the two probabilities conditioned on 'the' dropped only slightly, while the other two probabilities (conditioned on 'all' and 'anonymous') dropped rather dramatically. Q: Why did add-α smoothing cause probabilities conditioned on 'the' to fall much less than these others? And why is this behavior (causing probabilities conditioned on 'the' to fall less than the others) a good thing? In figuring this out, you may find it useful to look at the relevant individual rows of the counts matrix (prior to adding the 0.1) to see how they're different. In numpy, you can look at nth row of the counts matrix using counts[n,].
+
+ANS: The reason why all four probabilities went down can be due to the other bigram words' counts increases(probabilities have to sum up as 1).
+ANS: The denominator of "p(jury | the)" and "p(campaign | the)" is larger than the denominator of "p(calls | anonymous)" and "p(the | all)", so when smoothing the denominator adds 81.3(len(dict)*0.1) while the numerator only adds 0.1. The numerator grow 0.1 while the denominator grow significantly, causing the probabilities with the smaller orignal denominator(all the, anonmous calls) drop dramatically. In my opinion, the way the probabilities when adding smoothing for the conditioned on "the" is a good thing, becasue according to the perplexity I calculate in Q6 the bigram unsmmothed model owns the lowest perplexity, meaning the model is good. Also by using the function GENERATE, the bigram unsmmothed model's sentences make more sense.
+
+
+6.  Q: Which model performed worst and why might you have expected that model to have performed worst? Q: Did smoothing help or hurt the model's 'performance' when evaluated on this corpus? Why might that be?
+
+ANS: Unigram model performance is the worst. Unigram only count and calcualte the probabilities of single words unlike bigram(bigram), n-grams more than 1 can be see as it will carries more information to the corpus or sentence. Also no smoothing was implemented in the unigram model might have sparse data issues.
+ANS: Smoothing is making the model's performance decrease(perplexity is higher in bigram smoothed model, the lower the better) The reason can be, while smoothing the process add probabilities to the bigram words which is never occured before and the corpus is already very small so the overall probabilies will not have much differnce. That might cause the GENERATE function generating some nonsense sentences
+
+
+7. Q: Compare the models qualitatively based on their generation. How does each perform?
+
+ANS: Bigram unsmoothed model performance is the best follow by bigram smoothed model, and unigram model is the worst.
