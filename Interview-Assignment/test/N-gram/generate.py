@@ -1,3 +1,13 @@
+#!/usr/bin/env python3
+
+"""
+ENLP A1: N-Gram Language Models
+
+@author: Klinton Bicknell, Harry Eldridge, Nathan Schneider
+
+DO NOT SHARE/DISTRIBUTE SOLUTIONS WITHOUT THE INSTRUCTOR'S PERMISSION
+"""
+
 import numpy as np
 
 '''

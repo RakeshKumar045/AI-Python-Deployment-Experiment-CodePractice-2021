@@ -1,25 +1,38 @@
-import json
+#!/usr/bin/env python3
 
-# charset=utf-16le
+"""
+ENLP A1: N-Gram Language Models
 
-with open('brown_vocab_100.txt', encoding='utf-16') as f:
-	contents = f.read()
+@author: Klinton Bicknell, Harry Eldridge, Nathan Schneider
 
-final = contents.rstrip().replace('\n', ' ').split(' ')
+DO NOT SHARE/DISTRIBUTE SOLUTIONS WITHOUT THE INSTRUCTOR'S PERMISSION
+"""
+import json as j
 
-# create dict
 word_index_dict = {}
-for i, a in enumerate(final):
-	word_index_dict[a] = i
-# print(i, a)
 
-with open('word_to_index_100.txt', 'w') as file:
-	file.write(json.dumps(word_index_dict))
+
+def read_file(filename):
+	with open(filename + '.txt', encoding='utf-16') as f:
+		data = f.read()
+	f.close()
+	return data
+
+
+def save_file(filename, value):
+	with open(filename + '.txt', 'w') as f:
+		f.write(j.dumps(value))
+	f.close()
+
 
 # TODO: read brown_vocab_100.txt into word_index_dict
+vocab = read_file("brown_vocab_100")
+text = vocab.rstrip().replace('\n', ' ').split(' ')
+for ind, value in enumerate(text):
+	word_index_dict[value] = ind
 
 # TODO: write word_index_dict to word_to_index_100.txt
-
+save_file("word_to_index_100", word_index_dict)
 
 print(word_index_dict['all'])
 print(word_index_dict['resolution'])

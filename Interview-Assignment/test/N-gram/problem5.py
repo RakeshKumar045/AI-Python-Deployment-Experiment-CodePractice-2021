@@ -1,48 +1,81 @@
+#!/usr/bin/env python3
+
+"""
+ENLP A1: N-Gram Language Models
+
+@author: Klinton Bicknell, Harry Eldridge, Nathan Schneider
+
+DO NOT SHARE/DISTRIBUTE SOLUTIONS WITHOUT THE INSTRUCTOR'S PERMISSION
+"""
+
 import numpy as np
 
 
+def read_file(filename):
+	with open(filename + '.txt', encoding='utf-16') as f:
+		data = f.read()
+	f.close()
+	return data
+
+
+def save_file(filename, value):
+	with open(filename + '.txt', 'w') as f:
+		f.write(str(value))
+	f.close()
+
+
+def load_dict_from_file():
+	f = open('word_to_index_100.txt', 'r')
+	data = f.read()
+	f.close()
+	return eval(data)
+
+
+vocab = read_file("brown_vocab_100")
+text = vocab.rstrip().replace('\n', ' ').split(' ')
+
+word_index_dict = load_dict_from_file()
+
+brown = read_file("brown_100")
+sent_split = brown.rstrip().lower().replace('\r\n', '').replace('\n', '').split(' ')
+
+
 def bigram():
-	with open('brown_vocab_100.txt', encoding='utf-16') as f:
-		contents = f.read()
+	vocab = read_file("brown_vocab_100")
+	text = vocab.rstrip().replace('\n', ' ').split(' ')
 
-	final = contents.rstrip().replace('\n', ' ').split(' ')
+	word_index_dict = load_dict_from_file()
 
-	# create dict
-	word_index_dict = {}
-	for i, a in enumerate(final):
-		word_index_dict[a] = i
+	brown = read_file("brown_100")
+	sent_split = brown.rstrip().lower().replace('\r\n', '').replace('\n', '').split(' ')
 
-	with open('brown_100.txt', encoding='utf-16') as f:
-		sent = f.read()
-
-	sent_split = sent.rstrip().lower().replace('\r\n', '').replace('\n', '').split(' ')
-
-	s = (len(word_index_dict), len(word_index_dict))
-	counts = np.zeros(s)  # TODO: initialize numpy 0s array
-
-	# TODO: iterate through file and update counts
+	# TODO: initialize numpy 0s array
+	size = len(word_index_dict)
 	# TODO: normalize counts
+	counts = np.zeros((size, size))
+	# TODO: iterate through file and update counts
 	# TODO: writeout bigram probabilities
 
-	bi_words = []
+	bigram = []
 	for i in range(len(sent_split) - 1):
-		bi_words.append(sent_split[i] + ' ' + sent_split[i + 1])
+		bigram.append(sent_split[i] + ' ' + sent_split[i + 1])
 
-	while '</s> <s>' in bi_words: bi_words.remove('</s> <s>')
+	while '</s> <s>' in bigram:
+		bigram.remove('</s> <s>')
 
 	my_dict = {}
-	c = 0
+	count = 0
 
-	for j in bi_words:
-		for i in range(len(bi_words)):
-			if bi_words[i] == j:
-				c += 1
-		my_dict[j] = c
-		c = 0
+	for word in bigram:
+		for ind in range(len(bigram)):
+			if bigram[ind] == word:
+				count += 1
+		my_dict[word] = count
+		count = 0
 
 	dict_list = []
-	for key, value in my_dict.items():
-		temp = [key, value]
+	for ind, value in my_dict.items():
+		temp = [ind, value]
 		dict_list.append(temp)
 
 	for i in range(len(dict_list)):
@@ -51,23 +84,19 @@ def bigram():
 		counts[x, y] = dict_list[i][1]
 
 	cnt_bi_unsth = counts.tolist()
-
 	return cnt_bi_unsth, sent_split, word_index_dict
 
 
 if __name__ == '__main__':
-
-	# bigram unsmooth
+	# bigram
 	cnt_bi_unsth, sent_split, word_index_dict = bigram()
-
-	# problem 5
 	quest = ['in the past', 'in the time', 'the jury said', 'the jury recommended', 'jury said that',
 			 'agriculture teacher ,']
 	counts_tri = np.zeros(len(quest))
 
 	tri_words = []
-	for i in range(len(sent_split) - 2):
-		tri_words.append(sent_split[i] + ' ' + sent_split[i + 1] + ' ' + sent_split[i + 2])
+	for ind in range(len(sent_split) - 2):
+		tri_words.append(sent_split[ind] + ' ' + sent_split[ind + 1] + ' ' + sent_split[ind + 2])
 
 	counts_tri = np.zeros(len(quest))
 	for k in range(len(quest)):
@@ -88,5 +117,5 @@ if __name__ == '__main__':
 																								   word_index_dict[
 																									   quest[i].split()[
 																										   1]]] + (
-																										   0.1 * len(
-																									   word_index_dict)))))
+																									   0.1 * len(
+																								   word_index_dict)))))
