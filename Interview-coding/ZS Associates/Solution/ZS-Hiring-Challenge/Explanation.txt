@@ -1,0 +1,2 @@
+We had to predict the status of the business license of the person in the given scenario. It was a multiclass classification problem which required over-sampling and under-sampling to balance the dataset. I used the following algorithms for the same.
+Logistic regression, SVM, Naive Bayes, KNN, Random Forest, Decision Tree, XGBoost and Artificial Neural Networks. Among the above algorithms, the XGBoost algorithm was parameter tuned to give the best result of precision and recall score. Hence I used XGBoost algorithm to predict the test dataset.
